@@ -9,11 +9,13 @@ use utils::stopwatch::stopwatch::Stopwatch;
 pub mod server_init_funcs {
     pub mod server_init;
     pub mod server_state_def;
-    pub mod shuffle_bag;
 }
 pub mod utils {
     pub mod batch_insert {
         pub mod batch_insert_pg;
+    }
+    pub mod env {
+        pub mod get_env_var;
     }
     pub mod stopwatch {
         pub mod stopwatch;
