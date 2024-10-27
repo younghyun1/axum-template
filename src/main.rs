@@ -29,8 +29,8 @@ pub mod utils {
 #[tokio::main(flavor = "multi_thread")]
 async fn main() -> anyhow::Result<()> {
     // time measurements
-    let mut stopwatch = Stopwatch::new(Some("Initializing webserver..."));
     let server_start_time: DateTime<Utc> = Utc::now();
+    let mut timer = Stopwatch::new(Some("Initializing webserver..."));
 
     // adjust logging levels here
     let mut filter: EnvFilter =
@@ -45,14 +45,16 @@ async fn main() -> anyhow::Result<()> {
     // set logging parameters here
     tracing_subscriber::fmt()
         .with_ansi(false) // disable colored output; advisable if persisting logs to external
-        // .with_target(false) // disable target display
+        .with_target(false) // disable target display
         .with_env_filter(filter)
         .init();
+
+    timer.click("Logging initialized");
 
     // load .env files
     match dotenv() {
         Ok(path_buf) => {
-            stopwatch.click(&format!(
+            timer.click(&format!(
                 "Env. variables at {} loaded",
                 path_buf.to_str().unwrap_or("N/A"),
             ));
@@ -65,8 +67,10 @@ async fn main() -> anyhow::Result<()> {
         }
     }
 
+    timer.click("Environment variables loaded");
+
     // server initialization logic separated for potential future unit testing.
-    match server_initializer(server_start_time).await {
+    match server_initializer(server_start_time, &mut timer).await {
         Ok(_) => {
             info!("webserver successfully terminated",);
             return Ok(());
@@ -75,6 +79,4 @@ async fn main() -> anyhow::Result<()> {
             return Err(anyhow!("{:?}", e));
         }
     }
-
-    Ok(())
 }

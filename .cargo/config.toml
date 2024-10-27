@@ -1,2 +1,8 @@
+# my laptop's on skylake; avx2 should be available
 [build]
-rustflags = ["-Ctarget-cpu=x86-64-v3"]
+rustflags = ["-Ctarget-cpu=skylake"]
+
+# this is for linking with mold/clang for faster compiles
+[target.x86_64-unknown-linux-gnu]
+linker = "/usr/bin/clang"
+rustflags = ["-C", "link-arg=--ld-path=/usr/bin/mold"]
