@@ -8,10 +8,18 @@ use tracing_subscriber::EnvFilter;
 use utils::stopwatch::stopwatch::Stopwatch;
 pub mod server_init_funcs {
     pub mod server_init;
+    pub mod server_state_def;
+    pub mod shuffle_bag;
 }
 pub mod utils {
+    pub mod batch_insert {
+        pub mod batch_insert_pg;
+    }
     pub mod stopwatch {
         pub mod stopwatch;
+    }
+    pub mod regex {
+        pub mod regex_defs;
     }
 }
 
