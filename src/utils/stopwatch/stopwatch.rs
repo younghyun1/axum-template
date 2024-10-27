@@ -1,4 +1,3 @@
-use chrono::{DateTime, Utc};
 use tracing::info;
 
 pub struct Stopwatch {
@@ -8,24 +7,21 @@ pub struct Stopwatch {
 
 impl Stopwatch {
     pub fn new(message: Option<&str>) -> Self {
-        match message {
-            Some(msg) => {
-                println!(
-                    "{}  INFO {}: {}",
-                    chrono::Utc::now().to_rfc3339_opts(chrono::SecondsFormat::Micros, true),
-                    env!("CARGO_PKG_NAME"),
-                    msg
-                );
-            }
-            None => (),
+        if let Some(msg) = message {
+            println!(
+                "{}  INFO {}: {}",
+                chrono::Utc::now().to_rfc3339_opts(chrono::SecondsFormat::Micros, true),
+                env!("CARGO_PKG_NAME"),
+                msg
+            );
         }
 
         let now = tokio::time::Instant::now();
 
-        return Self {
+        Self {
             original_start: now,
             start: now,
-        };
+        }
     }
 
     pub fn click(&mut self, message: &str) {
