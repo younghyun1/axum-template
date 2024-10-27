@@ -1,0 +1,111 @@
+[package]
+name = "axum-template"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+opt-level = 3
+codegen-units = 1
+debug = false
+incremental = false
+strip = true
+lto = true
+panic = "unwind"
+
+[dependencies]
+# web framework
+axum = { version = "0.7.7", default-features = false, features = [
+    "form",
+    "http2",
+    "json",
+    "matched-path",
+    "original-uri",
+    "query",
+    "tokio",
+    "tower-log",
+    "tracing",
+    "macros",
+    "ws",
+    "multipart",
+] } #is the web framework
+axum-extra = { version = "0.9.4", features = ["cookie"] }
+tower = "0.5.1"
+tower-http = { version = "0.6.1", features = ["cors"] }
+reqwest = { version = "0.12.8", default-features = false, features = [
+    "http2",
+    "charset",
+    "macos-system-configuration",
+    "json",
+    "rustls-tls",
+] } #sends requests
+
+# async
+tokio = { version = "1.41.0", features = ["macros", "rt-multi-thread", "fs"] }
+
+#serialziation/deserialization/file format handg
+serde = "1.0.213"
+serde_json = "1.0.132"
+serde_derive = "1.0.213"
+bincode = "1.3.3"
+
+#string parsing/regex
+regex = { version = "1.11.1", features = ["perf-dfa-full"] }
+fancy-regex = "0.14.0"
+phonenumber = "0.3.6+8.13.36"
+unicode-normalization = "0.1.24"
+
+#time
+chrono = { version = "0.4.38", features = ["serde"] }
+chrono-tz = "0.10.0"
+
+#tls/crypto/hashing/rand
+argon2 = "0.5.3"
+base64url = "0.1.0"
+rsa = "0.9.6"
+sha2 = { version = "0.10.8", features = ["oid"] }
+rand = "0.8.5"
+
+#db
+tokio-postgres = { version = "0.7.12", features = [
+    "with-uuid-1",
+    "with-serde_json-1",
+    "with-chrono-0_4",
+] }
+deadpool-postgres = "0.14.0"
+
+#concurrency and async and iterator tools
+dashmap = { version = "6.0.1", features = ["inline"] }
+itertools = "0.13.0"
+#rayon = "1.10.0"
+#futures = "0.3.30"
+
+#env loading
+dotenvy = "0.15.7"
+
+#error handling
+anyhow = "1.0.91"
+thiserror = "1.0.65"
+
+#logging and self-analysis
+sysinfo = "0.32.0"
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
+
+#graph library
+#petgraph = { version = "0.6.4", features = ["serde-1"] }
+
+#uuid
+uuid = { version = "1.11.0", features = ["serde", "fast-rng", "v4"] }
+
+#email
+lettre = { version = "0.11.10", default-features = false, features = [
+    "builder",
+    "hostname",
+    "smtp-transport",
+    "pool",
+    "tokio1-rustls-tls",
+    "tokio1",
+] }
+
+#crawling
+fantoccini = "0.21.2"
