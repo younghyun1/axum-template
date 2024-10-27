@@ -1,3 +1,4 @@
+use chrono::{DateTime, Utc};
 use tracing::info;
 
 pub struct Stopwatch {
@@ -29,7 +30,7 @@ impl Stopwatch {
 
     pub fn click(&mut self, message: &str) {
         info!("{}: {:?}", message, self.start.elapsed());
-        self.start = tokio::time::Instant::now();   
+        self.start = tokio::time::Instant::now();
     }
 
     pub fn total(&self, message: &str) {
